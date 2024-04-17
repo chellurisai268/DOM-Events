@@ -1,0 +1,139 @@
+<script>
+    var a;
+    var b;
+    var i=0;
+
+      axios.get("https://fakestoreapi.in/api/products/category").then(function(res){
+
+          a=res.data.categories
+          jag()
+    })
+
+    function jag(){
+        a.forEach(function(s){
+            var nli=document.createElement("li")
+            nli.innerHTML=s
+            nli.style.padding="40px"
+            document.getElementById("d1").appendChild(nli)
+
+            nli.onclick=function() {
+
+             axios.get("https://fakestoreapi.in/api/products/category?type="+s).then(function(res){
+                   b=res.data.products
+                   console.log(b)
+                   din()
+
+             })
+                
+            }
+           
+        })
+    }
+      
+    function din(){
+        document.getElementById("d2").innerHTML=""
+        b.forEach(function(q,i){
+            var dd=document.createElement("div")
+            dd.style.width="30%"
+            dd.style.border="2px solid red"
+            dd.style.backgroundColor="yellow"
+            dd.style.margin="10px"
+            dd.style.padding="10px"
+
+            dd.onclick=function(){
+                document.getElementById("d3").innerHTML=""
+
+                axios.get("https://fakestoreapi.in/api/products/"+q.id).then( function(res){
+                    //   c=res.data.product
+                      rrr( res.data.product)
+                    //   console.log(c)
+
+                })
+
+                
+            }
+                
+              
+            
+
+            var imm=document.createElement("img")
+            imm.src=q.image
+            imm.style.width="20%"
+            imm.style.textAlign="center"
+            dd.appendChild(imm)
+         
+            var p1=document.createElement("h5")
+            p1.innerHTML="Tittle :"+q.brand
+            dd.appendChild(p1)
+
+            var p2=document.createElement("h6")
+            p2.innerHTML="Model:"+q.model
+            dd.appendChild(p2)
+
+            var p3=document.createElement("h5")
+            p3.innerHTML="Price :"+q.price
+            dd.appendChild(p3)
+
+            var p4=document.createElement("p")
+              p4.className="text-truncate"
+            p4.innerHTML= "<b>Description : </b>"+q.description
+            dd.appendChild(p4)
+
+            document.getElementById("d2").appendChild(dd)
+
+            
+
+        })
+    }
+
+    function rrr( c){
+        
+        var ldd=document.createElement("div")
+                ldd.style.width="97%"
+                ldd.style.border="2px solid blue"
+                ldd.style.padding="10px"
+                ldd.style.marginTop="100px"
+                ldd.className=" bg-info"
+
+                var lim=document.createElement("img")
+                lim.src=c.image
+                lim.style.width="20%"
+                lim.style.transform="360"
+                lim.style.transition="1.4s"
+                console.dir(lim)
+                ldd.appendChild(lim)
+
+                var ili=document.createElement("h4")
+                ili.innerHTML= "ID :"+c.id 
+                ldd.appendChild(ili)
+
+                var tli=document.createElement("h4")
+                tli.innerHTML= "Tittle :"+c.title
+                tli.className="text-truncate"
+                ldd.appendChild(tli)
+
+                var bli=document.createElement("h4")
+                bli.innerHTML= "Brand :"+c.brand
+                ldd.appendChild(bli)
+
+                var pli=document.createElement("h4")
+                pli.innerHTML= "Price :"+c.price
+                ldd.appendChild(pli)
+
+                var dli=document.createElement("p")
+                dli.innerHTML="Description :"+c.description
+                dli.className="text-truncate"
+                ldd.appendChild(dli)
+
+
+                document.getElementById("d3").appendChild(ldd)
+
+
+    }
+
+    
+
+   
+</script>
+</body>
+</html>

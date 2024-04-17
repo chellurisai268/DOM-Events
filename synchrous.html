@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+
+    </head>
+    <body>
+        <table id="d1" border="2px solid;" width="60%" height="600px" cellpadding="10" style="background-color: aqua;" >
+            <thead id="d2" style="background-color: blue; color: yellow;">
+                <td>category</td>
+                <td>description</td>
+                <td>id</td>
+                <td>image</td>
+                <td id="ra" onclick="abc()">price</td>
+                <td >ratting</td>
+                <td >count</td>
+                
+                
+            </thead>
+            <tbody id="d3">
+
+            </tbody>
+        </table>
+        <script>
+            var products;
+            var sort=false;
+            axios.get("https://fakestoreapi.com/products").then((resp)=>{
+                products=resp.data
+                incr()
+            })
+                function incr(){
+                    document.getElementById("d3").innerHTML=""
+                products.forEach(function(p){
+                    var s1=document.createElement("tr")
+                    var s2=document.createElement("td")
+                    s2.innerHTML=p.category
+                    s1.appendChild(s2)
+
+                    var s3=document.createElement("td")
+                    s3.innerHTML=p.description
+                    s1.appendChild(s3)
+
+                    var s4=document.createElement("td")
+                    s4.innerHTML=p.id 
+                    s1.appendChild(s4)
+
+                    var s5=document.createElement("td")
+                    var ima=document.createElement("img")
+                    ima.src=p.image
+                    ima.style.width="100%"
+                    s5.appendChild(ima)
+                    s1.appendChild(s5)
+
+                    var s6=document.createElement("td")
+                    s6.innerHTML=p.price
+                    s1.appendChild(s6)
+
+                    
+                    var ra=document.createElement("td")
+                    ra.innerHTML=p.rating.rate
+                    
+                    s1.appendChild(ra)
+
+
+                    
+                    var da=document.createElement("td")
+                    da.innerHTML=p.rating.count
+                    
+                    s1.appendChild(da)
+
+                   
+
+
+
+
+                    document.getElementById('d3').appendChild(s1)
+                })
+            }
+            function abc(){
+            document.getElementById("ra")
+                    products.sort(function(x,y){
+                            if(x.price>y.price){
+                                return sort ? 1 : -1
+                            }
+                            else{
+                                return sort ? -1 : 1
+                            } 
+
+                    })
+                        incr()
+                        sort=!sort
+                    
+                }
+                
+        
+            
+                
+        </script>
+    </body>
+</html>
